@@ -46,7 +46,10 @@ Structure du code:
 
 Pour répondre au besoin de ce projet, j'ai décidé d'utilisé l'architecture ci dessous: 
 ![Texte alternatif](images/General-Shape.png)
-
+"my_env": Cette espace nous permet de crée un environement virtuel nous permettant d'y ajouter toutes les library nécéssaire pour notre application.
+"src": Cette espace est utilisé pour stocké notre script python "main.py" contenant le wrapper de notre application
+"Dockerfile": Ce script docker nous permet d'inséré toutes les instructions pour construire notre image Docker, y compris la base de l'image python, l'installation des dépendances à partir de notre "requirements.txt", et la commande pour exécutert notre script python. 
+"requirements": Ce script type text nous permet d'ajouté tout les dépendances nécéssaires à notre application.
 
 
 
