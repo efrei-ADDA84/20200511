@@ -236,8 +236,9 @@ export OPENWEATHER_API_KEY=YOUR_KEY
 
 Une fois fait, nous pouvons éxécuter le code et voir le résultat suivant:
 
-
-
+```shell
+La météo à Paris, FR est : light rain avec une température de 8.66°C.
+```
 
 Conclusion:
 
