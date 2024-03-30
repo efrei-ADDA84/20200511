@@ -222,6 +222,18 @@ CMD ["python", "./main.py"] : Définit la commande par défaut pour exécuter l'
 
 Test:
 
+Wrapper:
+
+Définition de LATITUDE et LONGITUDE
+
+Pour configurer une application ou un script qui nécessite des variables d'environnement spécifiques, comme la latitude et la longitude pour notre application météo, nous pouvons les définir directement depuis notre terminal zsh. 
+
+```shell
+export LATITUDE=48.8566
+export LONGITUDE=2.3522
+```
+
+
 Conclusion:
 
 
