@@ -62,6 +62,17 @@ Pour répondre au besoin de ce projet, j'ai décidé d'utilisé l'architecture c
 
 Code: 
 
+Wrapper:
+
+Ce script Python sert de wrapper pour l'API OpenWeather. Il permet de récupérer les informations météorologiques actuelles pour une localisation spécifiée par latitude et longitude.
+ 
+Importation des modules
+
+```python
+import os
+import requests
+
+
 Test:
 
 Conclusion:
