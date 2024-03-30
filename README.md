@@ -231,7 +231,12 @@ Pour configurer une application ou un script qui nécessite des variables d'envi
 ```shell
 export LATITUDE=48.8566
 export LONGITUDE=2.3522
+export OPENWEATHER_API_KEY=YOUR_KEY
 ```
+
+Une fois fait, nous pouvons éxécuter le code et voir le résultat suivant:
+
+
 
 
 Conclusion:
