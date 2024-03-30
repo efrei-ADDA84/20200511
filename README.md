@@ -71,7 +71,7 @@ Importation des modules
 ```python
 import os
 import requests
-
+```
 
 Test:
 
