@@ -228,16 +228,102 @@ Définition de LATITUDE et LONGITUDE
 
 Pour configurer une application ou un script qui nécessite des variables d'environnement spécifiques, comme la latitude et la longitude pour notre application météo, nous pouvons les définir directement depuis notre terminal zsh. 
 
+Input
+
 ```shell
 export LATITUDE=48.8566
 export LONGITUDE=2.3522
 export OPENWEATHER_API_KEY=YOUR_KEY
 ```
 
-Une fois fait, nous pouvons éxécuter le code et voir le résultat suivant:
+Output
 
 ```shell
 La météo à Paris, FR est : light rain avec une température de 8.66°C.
+```
+
+Les test pour notre wrapper fonctionne comme prévus.
+
+Dockerfile:
+
+Construire l'image Docker
+
+Input
+
+```shell
+docker build -t monappweather:latest .
+```
+
+Validation du Dockerfile et de l'image
+
+Input
+
+```shell
+docker run --rm -i hadolint/hadolint < Dockerfile
+```
+
+Output:
+
+```shell
+-:8 DL3018 warning: Pin versions in apk add. Instead of `apk add <package>` use `apk add <package>=<version>`
+```
+
+Aucune erreur n'est rencontré concernant le : 0 lint errors on Dockerfile (hadolint) 
+
+Scanner les vulnérabilités avec Trivy
+
+Input
+
+```shell
+trivy image monappweather:latest
+```
+
+Output
+
+```shell
+2024-03-31T00:26:53.204+0100    INFO    Need to update DB
+2024-03-31T00:26:53.204+0100    INFO    DB Repository: ghcr.io/aquasecurity/trivy-db:2
+2024-03-31T00:26:53.204+0100    INFO    Downloading DB...
+44.66 MiB / 44.66 MiB [-------------------------------------------------------------------------------] 100.00% 11.17 MiB p/s 4.2s
+2024-03-31T00:26:58.860+0100    INFO    Vulnerability scanning is enabled
+2024-03-31T00:26:58.860+0100    INFO    Secret scanning is enabled
+2024-03-31T00:26:58.860+0100    INFO    If your scanning is slow, please try '--scanners vuln' to disable secret scanning
+2024-03-31T00:26:58.860+0100    INFO    Please see also https://aquasecurity.github.io/trivy/v0.50/docs/scanner/secret/#recommendation for faster secret detection
+2024-03-31T00:26:58.891+0100    INFO    Detected OS: alpine
+2024-03-31T00:26:58.891+0100    INFO    Detecting Alpine vulnerabilities...
+2024-03-31T00:26:58.896+0100    INFO    Number of language-specific files: 1
+2024-03-31T00:26:58.896+0100    INFO    Detecting python-pkg vulnerabilities...
+
+monappweather:latest (alpine 3.19.1)
+
+Total: 0 (UNKNOWN: 0, LOW: 0, MEDIUM: 0, HIGH: 0, CRITICAL: 0)
+
+2024-03-31T00:26:58.898+0100    INFO    Table result includes only package filenames. Use '--format json' option to get the full path to the package file.
+
+Python (python-pkg)
+
+Total: 2 (UNKNOWN: 0, LOW: 0, MEDIUM: 1, HIGH: 1, CRITICAL: 0)
+
+┌───────────────────────┬────────────────┬──────────┬────────┬───────────────────┬───────────────┬──────────────────────────────────────────────────────────┐
+│        Library        │ Vulnerability  │ Severity │ Status │ Installed Version │ Fixed Version │                          Title                           │
+├───────────────────────┼────────────────┼──────────┼────────┼───────────────────┼───────────────┼──────────────────────────────────────────────────────────┤
+│ pip (METADATA)        │ CVE-2023-5752  │ MEDIUM   │ fixed  │ 23.0.1            │ 23.3          │ pip: Mercurial configuration injectable in repo revision │
+│                       │                │          │        │                   │               │ when installing via pip                                  │
+│                       │                │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2023-5752                │
+├───────────────────────┼────────────────┼──────────┤        ├───────────────────┼───────────────┼──────────────────────────────────────────────────────────┤
+│ setuptools (METADATA) │ CVE-2022-40897 │ HIGH     │        │ 58.1.0            │ 65.5.1        │ pypa-setuptools: Regular Expression Denial of Service    │
+│                       │                │          │        │                   │               │ (ReDoS) in package_index.py                              │
+│                       │                │          │        │                   │               │ https://avd.aquasec.com/nvd/cve-2022-40897               │
+└───────────────────────┴────────────────┴──────────┴────────┴───────────────────┴───────────────┴──────────────────────────────────────────────────────────┘
+```
+
+Concernant les vulnérabilité sur notre image selectionner "python:3.9-alpine", nous pouvons voir ici que nous avons aucune vulnérabilité de type critique: Total: 2 (UNKNOWN: 0, LOW: 0, MEDIUM: 1, HIGH: 1, CRITICAL: 0) : 
+
+
+Exécuter le conteneur Docker
+
+```shell
+docker run -e OPENWEATHER_API_KEY=VotreCléAPI -e LATITUDE=48.8566 -e LONGITUDE=2.3522 monappweather:latest
 ```
 
 Conclusion:
