@@ -42,7 +42,11 @@ docker run --rm -i hadolint/hadolint < Dockerfile
 
 ## Report
 
-Structure du code: 
+Introduction:
+
+
+
+Architecture: 
 
 Pour répondre au besoin de ce projet, j'ai décidé d'utilisé l'architecture ci dessous: 
 
@@ -55,6 +59,12 @@ Pour répondre au besoin de ce projet, j'ai décidé d'utilisé l'architecture c
 "Dockerfile": Ce script docker nous permet d'inséré toutes les instructions pour construire notre image Docker, y compris la base de l'image python, l'installation des dépendances à partir de notre "requirements.txt", et la commande pour exécutert notre script python. 
 
 "requirements": Ce script type text nous permet d'ajouté tout les dépendances nécéssaires à notre application.
+
+Code: 
+
+Test:
+
+Conclusion:
 
 
 
