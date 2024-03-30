@@ -159,8 +159,66 @@ if __name__ == "__main__":
 
 Vérifie si les variables nécessaires sont définies avant d'exécuter la fonction get_weather. Si elles ne le sont pas, un message d'erreur est affiché.
 
+Dockerfile:
 
+Ce Dockerfile crée une image Docker pour notre application météo Python, en utilisant une image de base minimale pour réduire les vulnérabilités potentielles.
 
+Image de base
+
+```dockerfile
+FROM python:3.9-alpine
+```
+
+python:3.9-alpine : Utilise une version légère d'une image Python basée sur Alpine Linux. Alpine est choisi pour sa petite taille et sa sécurité accrue.
+
+Répertoire de travail
+
+```dockerfile
+WORKDIR /app
+```
+
+WORKDIR /app : Définit /app comme le répertoire de travail dans le conteneur. Les commandes qui suivent seront exécutées dans ce répertoire.
+
+Installation des dépendances
+
+```dockerfile
+RUN apk add --no-cache build-base libffi-dev
+```
+
+apk add --no-cache build-base libffi-dev : Installe les paquets nécessaires pour compiler certaines dépendances Python. build-base inclut les outils de compilation, et libffi-dev est souvent requis pour les packages nécessitant des extensions C.
+
+Installation des packages Python
+
+```dockerfile
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+```
+
+Copie requirements.txt dans le conteneur et installe les dépendances Python spécifiées. L'utilisation de --no-cache-dir aide à réduire la taille de l'image en évitant de stocker le cache de pip.
+
+Copie du code source
+
+```dockerfile
+COPY src/ ./
+```
+
+Copie les fichiers du répertoire source src/ dans le répertoire de travail /app du conteneur. Cela inclut votre script Python et tout autre fichier nécessaire à l'exécution de votre application.
+
+Variable d'environnement pour la clé API
+
+```dockerfile
+ENV OPENWEATHER_API_KEY=""
+```
+
+Définit une variable d'environnement OPENWEATHER_API_KEY qui sera utilisée par votre application. La valeur réelle de la clé API doit être fournie au runtime, garantissant que votre image Docker reste sécurisée.
+
+Commande d'exécution
+
+```dockerfile
+CMD ["python", "./main.py"]
+```
+
+CMD ["python", "./main.py"] : Définit la commande par défaut pour exécuter l'application, lançant main.py avec Python. Cette commande est exécutée lorsque le conteneur démarre, sauf si une commande différente est spécifiée au démarrage du conteneur.
 
 Test:
 
