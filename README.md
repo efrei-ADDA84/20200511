@@ -254,6 +254,35 @@ Input
 docker build -t monappweather:latest .
 ```
 
+Output:
+
+```shell
+[+] Building 1.4s (12/12) FINISHED                                                                           docker:desktop-linux
+ => [internal] load build definition from Dockerfile                                                                         0.0s
+ => => transferring dockerfile: 812B                                                                                         0.0s
+ => [internal] load metadata for docker.io/library/python:3.9-alpine                                                         1.3s
+ => [auth] library/python:pull token for registry-1.docker.io                                                                0.0s
+ => [internal] load .dockerignore                                                                                            0.0s
+ => => transferring context: 2B                                                                                              0.0s
+ => [1/6] FROM docker.io/library/python:3.9-alpine@sha256:99161d2323b4130fed2d849dc8ba35274d1e1f35da170435627b21d305dad954   0.0s
+ => [internal] load build context                                                                                            0.0s
+ => => transferring context: 106B                                                                                            0.0s
+ => CACHED [2/6] WORKDIR /app                                                                                                0.0s
+ => CACHED [3/6] RUN apk add --no-cache build-base libffi-dev                                                                0.0s
+ => CACHED [4/6] COPY requirements.txt ./                                                                                    0.0s
+ => CACHED [5/6] RUN pip install --no-cache-dir -r requirements.txt                                                          0.0s
+ => CACHED [6/6] COPY src/ ./                                                                                                0.0s
+ => exporting to image                                                                                                       0.0s
+ => => exporting layers                                                                                                      0.0s
+ => => writing image sha256:eb12932e8ad14e7fd2c29d78a58fb2903d2e394058a8f1899447892e26607dea                                 0.0s
+ => => naming to docker.io/library/monappweather:latest                                                                      0.0s
+
+View build details: docker-desktop://dashboard/build/desktop-linux/desktop-linux/poofijn3hkuosv7f0niyf7g3t
+
+What's Next?
+  View a summary of image vulnerabilities and recommendations → docker scout quickview
+```
+
 Validation du Dockerfile et de l'image
 
 Input
