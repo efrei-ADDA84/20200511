@@ -4,7 +4,6 @@ Repository of SENECHAL-Morgan-M1-APP-BDML
 # DEVOPS - TP1: Docker
 
 ## Objectives
-
 - Create a GitHub repository named after your EFREI identifier.
 - Develop a wrapper that retrieves the weather for a given location using its latitude and longitude (passed as environment variables), utilizing the OpenWeather API. You may use the programming language of your choice (bash, python, go, nodejs, etc.).
 - Package your code in a Docker image.
@@ -42,3 +41,11 @@ docker run --rm -i hadolint/hadolint < Dockerfile
 - Ensuring no sensitive data (e.g., OpenWeather API key) is stored within the image.
 
 ## Report
+
+Structure du code: 
+
+Pour répondre au besoin de ce projet, j'ai décidé d'utilisé l'architecture ci dessous: 
+
+
+
+
