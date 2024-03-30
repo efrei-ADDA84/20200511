@@ -45,6 +45,14 @@ docker run --rm -i hadolint/hadolint < Dockerfile
 Structure du code: 
 
 Pour répondre au besoin de ce projet, j'ai décidé d'utilisé l'architecture ci dessous: 
+![Texte alternatif](images/General Shape.png)
+
+
+
+
+
+
+
 
 
 
