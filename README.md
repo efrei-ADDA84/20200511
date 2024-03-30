@@ -322,9 +322,18 @@ Concernant les vulnérabilité sur notre image selectionner "python:3.9-alpine",
 
 Exécuter le conteneur Docker
 
+Input:
+
 ```shell
-docker run -e OPENWEATHER_API_KEY=VotreCléAPI -e LATITUDE=48.8566 -e LONGITUDE=2.3522 monappweather:latest
+docker run --rm -e OPENWEATHER_API_KEY=b022acb509eacae0875ded1afe41a527 -e LATITUDE=31.2504 -e LONGITUDE=99.2506 monappweather  
 ```
+
+Output:
+
+```shell
+La météo à Ganzi, CN est : overcast clouds avec une température de -2.91°C.
+```
+
 
 Conclusion:
 
