@@ -363,6 +363,48 @@ Output:
 La météo à Ganzi, CN est : overcast clouds avec une température de -2.91°C.
 ```
 
+Publier l'image sur Docker Hub
+
+Créer un compte sur Docker Hub
+
+Link : https://hub.docker.com
+
+Se connecter à Docker Hub depuis votre terminal
+
+Input
+
+```shell
+docker login
+```
+
+Output
+
+```shell
+Authenticating with existing credentials...
+Login Succeeded
+```
+
+Taguer l'image
+
+```shell
+docker tag monappweather:latest mgn94/monappweather:latest
+```
+
+Pousser l'image sur Docker Hub
+
+```shell
+docker push mgn94/monappweather:latest
+```
+
+Nous pouvons retrouvé notre image sur Docker Hub : https://hub.docker.com/repository/docker/mgn94/monappweather/general
+
+
+
+
+
+
+
+
 
 Conclusion:
 
