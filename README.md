@@ -41,3 +41,4 @@ docker run --rm -i hadolint/hadolint < Dockerfile
 
 - Ensuring no sensitive data (e.g., OpenWeather API key) is stored within the image.
 
+## Report
