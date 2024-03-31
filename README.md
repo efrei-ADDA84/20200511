@@ -230,15 +230,15 @@ CMD ["python", "./main.py"]
 
 - **`CMD ["python", "./main.py"]`** : Définit la commande par défaut pour exécuter l'application, lançant main.py avec Python. Cette commande est exécutée lorsque le conteneur démarre, sauf si une commande différente est spécifiée au démarrage du conteneur.
 
-### Test
+## Test
 
-#### Wrapper
+### Wrapper
 
-Définition de LATITUDE et LONGITUDE
+#### Définition de LATITUDE et LONGITUDE
 
-Pour configurer une application ou un script qui nécessite des variables d'environnement spécifiques, comme la latitude et la longitude pour notre application météo, nous pouvons les définir directement depuis notre terminal zsh. 
+- Pour configurer une application ou un script qui nécessite des variables d'environnement spécifiques, comme la latitude et la longitude pour notre application météo, nous pouvons les définir directement depuis notre terminal **`zsh`**. 
 
-Input
+##### Input
 
 ```shell
 export LATITUDE=48.8566
@@ -246,25 +246,25 @@ export LONGITUDE=2.3522
 export OPENWEATHER_API_KEY=YOUR_KEY
 ```
 
-Output
+##### Output
 
 ```shell
 La météo à Paris, FR est : light rain avec une température de 8.66°C.
 ```
 
-Les test pour notre wrapper fonctionne comme prévus.
+- Les test pour notre wrapper fonctionne comme prévus.
 
-Dockerfile:
+### Dockerfile
 
-Construire l'image Docker
+#### Construire l'image Docker
 
-Input
+##### Input
 
 ```shell
 docker build -t monappweather:latest .
 ```
 
-Output:
+##### Output
 
 ```shell
 [+] Building 1.4s (12/12) FINISHED                                                                           docker:desktop-linux
@@ -293,31 +293,31 @@ What's Next?
   View a summary of image vulnerabilities and recommendations → docker scout quickview
 ```
 
-Validation du Dockerfile et de l'image
+#### Validation du Dockerfile et de l'image
 
-Input
+##### Input
 
 ```shell
 docker run --rm -i hadolint/hadolint < Dockerfile
 ```
 
-Output:
+##### Output
 
 ```shell
 -:8 DL3018 warning: Pin versions in apk add. Instead of `apk add <package>` use `apk add <package>=<version>`
 ```
 
-Aucune erreur n'est rencontré concernant le : 0 lint errors on Dockerfile (hadolint) 
+- Aucune erreur n'est rencontré concernant le : 0 lint errors on Dockerfile (hadolint) 
 
-Scanner les vulnérabilités avec Trivy
+#### Scanner les vulnérabilités avec Trivy
 
-Input
+##### Input
 
 ```shell
 trivy image monappweather:latest
 ```
 
-Output
+##### Output
 
 ```shell
 2024-03-31T00:26:53.204+0100    INFO    Need to update DB
@@ -356,61 +356,61 @@ Total: 2 (UNKNOWN: 0, LOW: 0, MEDIUM: 1, HIGH: 1, CRITICAL: 0)
 └───────────────────────┴────────────────┴──────────┴────────┴───────────────────┴───────────────┴──────────────────────────────────────────────────────────┘
 ```
 
-Concernant les vulnérabilité sur notre image selectionner "python:3.9-alpine", nous pouvons voir ici que nous avons aucune vulnérabilité de type critique: Total: 2 (UNKNOWN: 0, LOW: 0, MEDIUM: 1, HIGH: 1, CRITICAL: 0) : 
+- Concernant les vulnérabilité sur notre image selectionner **`python:3.9-alpine`**, nous pouvons voir ici que nous avons aucune vulnérabilité de type critique: **`Total: 2 (UNKNOWN: 0, LOW: 0, MEDIUM: 1, HIGH: 1, CRITICAL: 0)`**
 
 
-Exécuter le conteneur Docker
+#### Exécuter le conteneur Docker
 
-Input:
+##### Input
 
 ```shell
 docker run --rm -e OPENWEATHER_API_KEY=b022acb509eacae0875ded1afe41a527 -e LATITUDE=31.2504 -e LONGITUDE=99.2506 monappweather  
 ```
 
-Output:
+##### Output
 
 ```shell
 La météo à Ganzi, CN est : overcast clouds avec une température de -2.91°C.
 ```
 
-Publier l'image sur Docker Hub
+#### Publier l'image sur Docker Hub
 
-Créer un compte sur Docker Hub
+##### Créer un compte sur Docker Hub
 
-Link : https://hub.docker.com
+- Link : https://hub.docker.com
 
-Se connecter à Docker Hub depuis votre terminal
+#### Se connecter à Docker Hub depuis votre terminal
 
-Input
+##### Input
 
 ```shell
 docker login
 ```
 
-Output
+##### Output
 
 ```shell
 Authenticating with existing credentials...
 Login Succeeded
 ```
 
-Taguer l'image
+#### Taguer l'image
 
 ```shell
 docker tag monappweather:latest mgn94/monappweather:latest
 ```
 
-Pousser l'image sur Docker Hub
+#### Pousser l'image sur Docker Hub
 
 ```shell
 docker push mgn94/monappweather:latest
 ```
 
-Nous pouvons retrouvé notre image sur Docker Hub : https://hub.docker.com/repository/docker/mgn94/monappweather/general
+- Nous pouvons retrouvé notre image sur Docker Hub : https://hub.docker.com/repository/docker/mgn94/monappweather/general
 
-Aucune donnée sensible dans l'image
+#### Aucune donnée sensible dans l'image
 
-Dans la réalisation de ce Tp1, nous avons pris des mesures pour nous assurer qu'aucune donnée sensible, comme notre clé API OpenWeather, ne soit stockée dans l'image Docker. C'est une bonne pratique de sécurité de s'assurer que toutes les données sensibles sont fournies via des variables d'environnement au moment de l'exécution du conteneur.
+- Dans la réalisation de ce Tp1, nous avons pris des mesures pour nous assurer qu'aucune donnée sensible, comme notre clé API OpenWeather, ne soit stockée dans l'image Docker. C'est une bonne pratique de sécurité de s'assurer que toutes les données sensibles sont fournies via des variables d'environnement au moment de l'exécution du conteneur.
 
 Conclusion:
 
