@@ -412,7 +412,9 @@ docker push mgn94/monappweather:latest
 
 - Dans la réalisation de ce Tp1, nous avons pris des mesures pour nous assurer qu'aucune donnée sensible, comme notre clé API OpenWeather, ne soit stockée dans l'image Docker. C'est une bonne pratique de sécurité de s'assurer que toutes les données sensibles sont fournies via des variables d'environnement au moment de l'exécution du conteneur.
 
-Conclusion:
+## Conclusion
+
+En conclusion, ce Tp1 de DevOps a démontré une application efficace des principes d'intégration et de déploiement continu (CI/CD) à travers la création d'une application météo Dockerisée. En se concentrant sur les compétences essentielles en DevOps, telles que l'automatisation, la sécurité, et l'accessibilité, ce travail a abouti à la mise en œuvre réussie d'une solution logicielle qui interroge l'API OpenWeather pour des données météorologiques basées sur des coordonnées géographiques. Les défis rencontrés, notamment la gestion des vulnérabilités et la sécurisation des données sensibles, ont été abordés avec soin, renforçant l'importance de bonnes pratiques de développement et de sécurité dans l'écosystème technologique actuel. Le succès de ce projet est illustré non seulement par la fonctionnalité de l'application mais aussi par sa disponibilité publique sur DockerHub, encourageant ainsi le partage et la réutilisation au sein de la communauté DevOps.
 
 
 
