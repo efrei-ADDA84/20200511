@@ -70,9 +70,9 @@ Below is the general structure of our project's architecture:
 3. **Dockerization**: Use the `Dockerfile` to containerize the application, ensuring it includes the Python base image, installs dependencies, and specifies the command to run the script.
 4. **Deployment**: Publish the Docker image to DockerHub for community access and reuse.
 
-## Code: 
+## Code
 
-### Wrapper:
+### Wrapper
 
 - Ce script Python sert de wrapper pour l'API OpenWeather. Il permet de récupérer les informations météorologiques actuelles pour une localisation spécifiée par latitude et longitude.
  
