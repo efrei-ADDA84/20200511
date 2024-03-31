@@ -40,25 +40,35 @@ docker run --rm -i hadolint/hadolint < Dockerfile
 
 - Ensuring no sensitive data (e.g., OpenWeather API key) is stored within the image.
 
-## Report
+# DevOps Skills Enhancement Project - CI/CD with OpenWeather API
 
-Introduction:
+## Introduction
 
-Dans le cadre de l'approfondissement des compétences en DevOps, ce travail pratique numero 1 vise à illustrer l'intégration continue et le déploiement continu (CI/CD) en utilisant des outils modernes et des pratiques innovantes. L'objectif est de créer une application simple mais fonctionnelle qui interroge l'API OpenWeather pour obtenir des informations météorologiques basées sur des coordonnées géographiques fournies. Ce processus comprend la création d'un répertoire GitHub personnalisé, le développement d'un wrapper dans le langage de programmation de notre choix, et l'encapsulation de l'application dans une image Docker pour assurer la portabilité et la facilité de déploiement. Enfin, cette image sera publiée sur DockerHub, rendant notre travail accessible et réutilisable par la communauté. Ce projet met en lumière l'importance de l'automatisation et des bonnes pratiques de développement dans le paysage technologique actuel, soulignant l'essence même des principes DevOps.
+In the quest to deepen DevOps skills, Practical Work #1 aims to showcase Continuous Integration and Continuous Deployment (CI/CD) using modern tools and innovative practices. The goal is to develop a simple yet functional application that queries the OpenWeather API for weather information based on provided geographical coordinates. This process includes creating a custom GitHub repository, developing a wrapper in the programming language of our choice, and encapsulating the application in a Docker image to ensure portability and ease of deployment. Finally, this image will be published on DockerHub, making our work accessible and reusable by the community. This project highlights the significance of automation and good development practices in today's tech landscape, underscoring the core principles of DevOps.
 
-Architecture: 
+## Architecture
 
-Pour répondre au besoin de ce projet, j'ai décidé d'utilisé l'architecture ci dessous: 
+To meet the project's requirements, the following architecture has been employed:
 
-![Texte alternatif](images/General-Shape.png)
+### Components
 
-"my_env": Cette espace nous permet de crée un environement virtuel nous permettant d'y ajouter toutes les library nécéssaire pour notre application.
+- **`my_env`**: A virtual environment to include all necessary libraries for our application.
+- **`src`**: The space used to store our Python script `main.py`, containing our application's wrapper.
+- **`Dockerfile`**: This Docker script contains all the instructions to build our Docker image, including the base image of Python, installing dependencies from our `requirements.txt`, and the command to execute our Python script.
+- **`requirements`**: A text file to list all the necessary dependencies for our application.
 
-"src": Cette espace est utilisé pour stocké notre script python "main.py" contenant le wrapper de notre application.
+### Diagram
 
-"Dockerfile": Ce script docker nous permet d'inséré toutes les instructions pour construire notre image Docker, y compris la base de l'image python, l'installation des dépendances à partir de notre "requirements.txt", et la commande pour exécutert notre script python. 
+Below is the general structure of our project's architecture:
 
-"requirements": Ce fichier text nous permet d'ajouté tout les dépendances nécéssaires à notre application.
+![Alternative Text](images/General-Shape.png)
+
+## Implementation Steps
+
+1. **Environment Setup**: Create the `my_env` virtual environment and install necessary libraries.
+2. **Application Development**: Develop the `main.py` script in the `src` directory to interact with the OpenWeather API.
+3. **Dockerization**: Use the `Dockerfile` to containerize the application, ensuring it includes the Python base image, installs dependencies, and specifies the command to run the script.
+4. **Deployment**: Publish the Docker image to DockerHub for community access and reuse.
 
 Code: 
 
@@ -398,13 +408,9 @@ docker push mgn94/monappweather:latest
 
 Nous pouvons retrouvé notre image sur Docker Hub : https://hub.docker.com/repository/docker/mgn94/monappweather/general
 
+Aucune donnée sensible dans l'image
 
-
-
-
-
-
-
+Dans la réalisation de ce Tp1, nous avons pris des mesures pour nous assurer qu'aucune donnée sensible, comme notre clé API OpenWeather, ne soit stockée dans l'image Docker. C'est une bonne pratique de sécurité de s'assurer que toutes les données sensibles sont fournies via des variables d'environnement au moment de l'exécution du conteneur.
 
 Conclusion:
 
