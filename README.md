@@ -74,19 +74,19 @@ Below is the general structure of our project's architecture:
 
 ### Wrapper
 
-- Ce script Python sert de wrapper pour l'API OpenWeather. Il permet de récupérer les informations météorologiques actuelles pour une localisation spécifiée par latitude et longitude.
- 
-#### Importation des modules
+- This Python script serves as a wrapper for the OpenWeather API. It retrieves current weather information for a location specified by latitude and longitude.
+  
+#### Importing modules
 
 ```python
 import os
 import requests
 ```
 
-- **`os`** : Ce module fournit une manière portable d'utiliser les fonctionnalités dépendantes du système d'exploitation, comme lire ou écrire dans des variables d'environnement.
-requests : Un module externe qui facilite l'envoi de requêtes HTTP. Il est nécessaire de l'installer via pip.
+- **`os`** : This module provides a portable way to use operating system-dependent functionality, such as reading or writing environment variables.
+requests: An external module that facilitates sending HTTP requests. It needs to be installed via pip.
 
-#### Variables d'environnement
+#### Environment variables
 
 ```python
 LATITUDE = os.getenv('LATITUDE')
@@ -94,25 +94,25 @@ LONGITUDE = os.getenv('LONGITUDE')
 API_KEY = os.getenv('OPENWEATHER_API_KEY')
 ```
 
-- Ces lignes récupèrent les valeurs des variables d'environnement pour la latitude, la longitude, et la clé API d'OpenWeather. Utiliser des variables d'environnement pour ces informations sensibles aide à sécuriser le code.
-
-#### URL de base de l'API
+- These lines retrieve the values of the environment variables for latitude, longitude, and the OpenWeather API key. Using environment variables for this sensitive information helps secure the code.
+  
+#### Base URL of the API
 
 ```python
 BASE_URL = "http://api.openweathermap.org/data/2.5/weather"
 ```
 
-- Définit l'URL de base pour accéder à l'API météo d'OpenWeather.
-
-#### Fonction get_weather
+- Set the base URL to access the OpenWeather API.
+  
+#### Function get_weather
 
 ```python
 def get_weather(latitude, longitude, api_key):
 ```
 
-- Cette fonction fait la requête à l'API OpenWeather pour obtenir les données météorologiques basées sur la latitude et la longitude fournies.
+- This function makes the request to the OpenWeather API to obtain weather data based on the provided latitude and longitude.
 
-#### Construction de la requête
+#### Building the request
 
 ```python
 params = {
@@ -123,17 +123,17 @@ params = {
 }
 response = requests.get(BASE_URL, params=params)
 ```
-- Les paramètres nécessaires pour la requête API sont définis, puis une requête GET est envoyée. units='metric' indique que la température sera en degrés Celsius.
-
-#### Vérification de la réponse
+- The necessary parameters for the API request are defined, then a GET request is sent. units='metric' indicates that the temperature will be in Celsius degrees.
+  
+#### Response verification
 
 ```python
 response.raise_for_status()
 ```
 
-- Cette méthode lève une exception si la requête échoue, permettant au script de gérer l'erreur plutôt que de continuer avec une réponse invalide.
-
-#### Traitement de la réponse
+- This method raises an exception if the request fails, allowing the script to handle the error rather than proceeding with an invalid response.
+  
+#### Processing the response
 
 ```python
 data = response.json()
@@ -144,9 +144,9 @@ country = data['sys']['country']
 print(f"La météo à {city}, {country} est : {weather_description} avec une température de {temperature}°C.")
 ```
 
-- Convertit la réponse en JSON, puis extrait et affiche la description de la météo, la température, le nom de la ville, et le code du pays.
-
-#### Gestion des erreurs
+- Convert the response to JSON, then extract and display the weather description, temperature, city name, and country code.
+  
+#### Error handling
 
 ```python
 except requests.exceptions.HTTPError as err:
@@ -155,9 +155,9 @@ except Exception as e:
     print(f"Une erreur est survenue : {e}")
 ```
 
-- Gère les éventuelles erreurs HTTP ou autres exceptions qui pourraient survenir pendant la requête.
+- Handle any potential HTTP errors or other exceptions that may occur during the request.
 
-#### Point d'entrée principal
+#### Main entry point
 
 ```python
 if __name__ == "__main__":
@@ -167,76 +167,74 @@ if __name__ == "__main__":
         print("Les variables d'environnement LATITUDE, LONGITUDE, et OPENWEATHER_API_KEY sont requises.")
 ```
 
-- Vérifie si les variables nécessaires sont définies avant d'exécuter la fonction get_weather. Si elles ne le sont pas, un message d'erreur est affiché.
+- Check if the necessary variables are defined before executing the get_weather function. If they are not, an error message is displayed.
 
 ### Dockerfile
 
-- Ce Dockerfile crée une image Docker pour notre application météo Python, en utilisant une image de base minimale pour réduire les vulnérabilités potentielles.
-
-#### Image de base
+- This Dockerfile creates a Docker image for our Python weather application, using a minimal base image to reduce potential vulnerabilities.
+  
+#### Base image
 
 ```dockerfile
 FROM python:3.9-alpine
 ```
 
-- **`python:3.9-alpine`** : Utilise une version légère d'une image Python basée sur Alpine Linux. Alpine est choisi pour sa petite taille et sa sécurité accrue.
+- **`python:3.9-alpine`** : Use a lightweight version of a Python image based on Alpine Linux. Alpine is chosen for its small size and increased security.
 
-#### Répertoire de travail
+#### Working directory
 
 ```dockerfile
 WORKDIR /app
 ```
 
-- **`WORKDIR /app`** : Définit /app comme le répertoire de travail dans le conteneur. Les commandes qui suivent seront exécutées dans ce répertoire.
-
-#### Installation des dépendances
+- **`WORKDIR /app`** : Sets /app as the working directory in the container. Subsequent commands will be executed in this directory.
+  
+#### Installing dependencies
 
 ```dockerfile
 RUN apk add --no-cache build-base libffi-dev
 ```
 
-- **`apk add --no-cache build-base libffi-dev`** : Installe les paquets nécessaires pour compiler certaines dépendances Python. build-base inclut les outils de compilation, et libffi-dev est souvent requis pour les packages nécessitant des extensions C.
+- **`apk add --no-cache build-base libffi-dev`** : Install the necessary packages to compile certain Python dependencies. **`build-base`** includes compilation tools, and **`libffi-dev`** is often required for packages needing extensions.
 
-#### Installation des packages Python
+#### Installing Python packages
 
 ```dockerfile
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 ```
 
-- Copie **`requirements.txt`** dans le conteneur et installe les dépendances Python spécifiées. L'utilisation de **`--no-cache-dir`** aide à réduire la taille de l'image en évitant de stocker le cache de pip.
+- Copy **`requirements.txt`** in the container, install the specified Python dependencies. Using **`--no-cache-dir`**  helps reduce the image size by avoiding storing the pip cache.
 
-#### Copie du code source
+#### Copying the source code
 
 ```dockerfile
 COPY src/ ./
 ```
 
-- Copie les fichiers du répertoire source src/ dans le répertoire de travail /app du conteneur. Cela inclut votre script Python et tout autre fichier nécessaire à l'exécution de votre application.
+- Copy the files from the source directory src/ to the working directory /app in the container. This includes your Python script and any other files necessary for running your application.
 
-#### Variable d'environnement pour la clé API
+#### Environment variable for the API key
 
 ```dockerfile
 ENV OPENWEATHER_API_KEY=""
 ```
 
-- Définit une variable d'environnement **`OPENWEATHER_API_KEY`** qui sera utilisée par votre application. La valeur réelle de la clé API doit être fournie au runtime, garantissant que votre image Docker reste sécurisée.
-
-Commande d'exécution
+- Set an environment variable **`OPENWEATHER_API_KEY`** that will be used by your application. The actual value of the API key should be provided at runtime, ensuring that your Docker image remains secure.
 
 ```dockerfile
 CMD ["python", "./main.py"]
 ```
 
-- **`CMD ["python", "./main.py"]`** : Définit la commande par défaut pour exécuter l'application, lançant main.py avec Python. Cette commande est exécutée lorsque le conteneur démarre, sauf si une commande différente est spécifiée au démarrage du conteneur.
+- **`CMD ["python", "./main.py"]`** : Set the default command to execute the application, launching main.py with Python. This command is executed when the container starts, unless a different command is specified at container startup.
 
 ## Test
 
 ### Wrapper
 
-#### Définition de LATITUDE et LONGITUDE
+#### Definition of LATITUDE and LONGITUDE
 
-- Pour configurer une application ou un script qui nécessite des variables d'environnement spécifiques, comme la latitude et la longitude pour notre application météo, nous pouvons les définir directement depuis notre terminal **`zsh`**. 
+- To configure an application or script that requires specific environment variables, such as latitude and longitude for our weather application, we can set them directly from our .**`zsh`** terminal. 
 
 ##### Input
 
@@ -252,11 +250,11 @@ export OPENWEATHER_API_KEY=YOUR_KEY
 La météo à Paris, FR est : light rain avec une température de 8.66°C.
 ```
 
-- Les test pour notre wrapper fonctionne comme prévus.
+- The tests for our wrapper work as expected.
 
 ### Dockerfile
 
-#### Construire l'image Docker
+#### Build the Docker image
 
 ##### Input
 
@@ -293,7 +291,7 @@ What's Next?
   View a summary of image vulnerabilities and recommendations → docker scout quickview
 ```
 
-#### Validation du Dockerfile et de l'image
+#### Validation of the Dockerfile and the image
 
 ##### Input
 
@@ -307,9 +305,9 @@ docker run --rm -i hadolint/hadolint < Dockerfile
 -:8 DL3018 warning: Pin versions in apk add. Instead of `apk add <package>` use `apk add <package>=<version>`
 ```
 
-- Aucune erreur n'est rencontré concernant le : 0 lint errors on Dockerfile (hadolint) 
+- No errors were encountered: 0 lint errors on Dockerfile (hadolint)
 
-#### Scanner les vulnérabilités avec Trivy
+#### Scan vulnerabilities with Trivy
 
 ##### Input
 
@@ -356,10 +354,10 @@ Total: 2 (UNKNOWN: 0, LOW: 0, MEDIUM: 1, HIGH: 1, CRITICAL: 0)
 └───────────────────────┴────────────────┴──────────┴────────┴───────────────────┴───────────────┴──────────────────────────────────────────────────────────┘
 ```
 
-- Concernant les vulnérabilité sur notre image selectionner **`python:3.9-alpine`**, nous pouvons voir ici que nous avons aucune vulnérabilité de type critique: **`Total: 2 (UNKNOWN: 0, LOW: 0, MEDIUM: 1, HIGH: 1, CRITICAL: 0)`**
+- Regarding vulnerabilities on our selected image  **`python:3.9-alpine`**,  we can see here that we have no critical vulnerabilities: **`Total: 2 (UNKNOWN: 0, LOW: 0, MEDIUM: 1, HIGH: 1, CRITICAL: 0)`**
 
 
-#### Exécuter le conteneur Docker
+#### Run the Docker container
 
 ##### Input
 
@@ -373,13 +371,13 @@ docker run --rm -e OPENWEATHER_API_KEY=b022acb509eacae0875ded1afe41a527 -e LATIT
 La météo à Ganzi, CN est : overcast clouds avec une température de -2.91°C.
 ```
 
-#### Publier l'image sur Docker Hub
+#### Publish the image on Docker Hub.
 
-##### Créer un compte sur Docker Hub
+##### Create an account on Docker Hub
 
 - Link : https://hub.docker.com
 
-#### Se connecter à Docker Hub depuis votre terminal
+#### Log in to Docker Hub from your terminal
 
 ##### Input
 
@@ -394,27 +392,27 @@ Authenticating with existing credentials...
 Login Succeeded
 ```
 
-#### Taguer l'image
+#### Tag the image
 
 ```shell
 docker tag monappweather:latest mgn94/monappweather:latest
 ```
 
-#### Pousser l'image sur Docker Hub
+#### Push the image to Docker Hub
 
 ```shell
 docker push mgn94/monappweather:latest
 ```
 
-- Nous pouvons retrouvé notre image sur Docker Hub : https://hub.docker.com/repository/docker/mgn94/monappweather/general
+- We can find our image on Docker Hub : https://hub.docker.com/repository/docker/mgn94/monappweather/general
 
-#### Aucune donnée sensible dans l'image
+#### No sensitive data in the image
 
-- Dans la réalisation de ce Tp1, nous avons pris des mesures pour nous assurer qu'aucune donnée sensible, comme notre clé API OpenWeather, ne soit stockée dans l'image Docker. C'est une bonne pratique de sécurité de s'assurer que toutes les données sensibles sont fournies via des variables d'environnement au moment de l'exécution du conteneur.
+- In the completion of this TP1, we took steps to ensure that no sensitive data, such as our OpenWeather API key, was stored in the Docker image. It is a good security practice to ensure that all sensitive data are provided via environment variables at the time of container execution.
 
 ## Conclusion
 
-En conclusion, ce Tp1 de DevOps a démontré une application efficace des principes d'intégration et de déploiement continu (CI/CD) à travers la création d'une application météo Dockerisée. En se concentrant sur les compétences essentielles en DevOps, telles que l'automatisation, la sécurité, et l'accessibilité, ce travail a abouti à la mise en œuvre réussie d'une solution logicielle qui interroge l'API OpenWeather pour des données météorologiques basées sur des coordonnées géographiques. Les défis rencontrés, notamment la gestion des vulnérabilités et la sécurisation des données sensibles, ont été abordés avec soin, renforçant l'importance de bonnes pratiques de développement et de sécurité dans l'écosystème technologique actuel. Le succès de ce projet est illustré non seulement par la fonctionnalité de l'application mais aussi par sa disponibilité publique sur DockerHub, encourageant ainsi le partage et la réutilisation au sein de la communauté DevOps.
+In conclusion, this DevOps TP1 demonstrated an effective application of continuous integration and deployment (CI/CD) principles through the creation of a Dockerized weather application. By focusing on essential DevOps skills, such as automation, security, and accessibility, this work led to the successful implementation of a software solution that queries the OpenWeather API for weather data based on geographical coordinates. The challenges encountered, particularly in managing vulnerabilities and securing sensitive data, were carefully addressed, reinforcing the importance of good development and security practices in today's technological ecosystem. The success of this project is illustrated not only by the functionality of the application but also by its public availability on DockerHub, thereby encouraging sharing and reuse within the DevOps community.
 
 
 
