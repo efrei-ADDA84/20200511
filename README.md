@@ -55,7 +55,7 @@ To meet the project's requirements, the following architecture has been employed
 - **`my_env`**: A virtual environment to include all necessary libraries for our application.
 - **`src`**: The space used to store our Python script `main.py`, containing our application's wrapper.
 - **`Dockerfile`**: This Docker script contains all the instructions to build our Docker image, including the base image of Python, installing dependencies from our `requirements.txt`, and the command to execute our Python script.
-- **`requirements`**: A text file to list all the necessary dependencies for our application.
+- **`requirements`**: A text file to list all the necessary dependencies for our application : **`requests`**
 
 ### Diagram
 
@@ -70,9 +70,9 @@ Below is the general structure of our project's architecture:
 3. **Dockerization**: Use the `Dockerfile` to containerize the application, ensuring it includes the Python base image, installs dependencies, and specifies the command to run the script.
 4. **Deployment**: Publish the Docker image to DockerHub for community access and reuse.
 
-Code: 
+## Code: 
 
-Wrapper:
+### Wrapper:
 
 Ce script Python sert de wrapper pour l'API OpenWeather. Il permet de récupérer les informations météorologiques actuelles pour une localisation spécifiée par latitude et longitude.
  
@@ -83,7 +83,7 @@ import os
 import requests
 ```
 
-os : Ce module fournit une manière portable d'utiliser les fonctionnalités dépendantes du système d'exploitation, comme lire ou écrire dans des variables d'environnement.
+- os : Ce module fournit une manière portable d'utiliser les fonctionnalités dépendantes du système d'exploitation, comme lire ou écrire dans des variables d'environnement.
 requests : Un module externe qui facilite l'envoi de requêtes HTTP. Il est nécessaire de l'installer via pip.
 
 Variables d'environnement
