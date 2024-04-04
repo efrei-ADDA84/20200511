@@ -119,7 +119,7 @@ params = {
     'lat': latitude,
     'lon': longitude,
     'appid': api_key,
-    'units': 'metric'  # ou 'imperial' pour Fahrenheit
+    'units': 'metric'  
 }
 response = requests.get(BASE_URL, params=params)
 ```
