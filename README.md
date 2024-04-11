@@ -431,15 +431,15 @@ In conclusion, this DevOps TP1 demonstrated an effective application of continuo
 - Docker image disponible sur DockerHub
 - API qui renvoie la météo en utilisant la commande suivante en utilisant votre image :
   
-’’’
+```shell
 docker run --network host --env API_KEY=**** maregistry/efrei-devops-tp2:1.0.0
-’’’
+```
 
 puis dans un autre terminal
 
-’’’
+```shell
 curl "http://localhost:8081/?lat=5.902785&lon=102.754175"
-’’’
+```
 
 
 
