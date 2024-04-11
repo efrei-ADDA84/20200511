@@ -16,6 +16,7 @@ COPY src/ ./
 
 # Définir la variable d'environnement pour la clé API (la clé elle-même sera passée au runtime, pas stockée dans l'image)
 ENV OPENWEATHER_API_KEY=""
+ENV FLASK_APP=main.py
 
 # Commande pour exécuter l'application
-CMD ["python", "./main.py"]
+CMD ["flask", "run", "--host=0.0.0.0", "--port=8081"]
