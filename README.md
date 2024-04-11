@@ -414,7 +414,32 @@ docker push mgn94/monappweather:latest
 
 In conclusion, this DevOps TP1 demonstrated an effective application of continuous integration and deployment (CI/CD) principles through the creation of a Dockerized weather application. By focusing on essential DevOps skills, such as automation, security, and accessibility, this work led to the successful implementation of a software solution that queries the OpenWeather API for weather data based on geographical coordinates. The challenges encountered, particularly in managing vulnerabilities and securing sensitive data, were carefully addressed, reinforcing the importance of good development and security practices in today's technological ecosystem. The success of this project is illustrated not only by the functionality of the application but also by its public availability on DockerHub, thereby encouraging sharing and reuse within the DevOps community.
 
+# DEVOPS - TP2: Github Action
 
+## Objectifs
+
+- Configurer un workflow Github Action
+- Transformer un wrapper en API
+- Publier automatiquement à chaque push sur Docker Hub
+- Mettre à disposition son image (format API) sur DockerHub
+- Mettre à disposition son code dans un repository Github
+
+## Notation
+
+- Code disponible sur Github
+- Github action qui build et push l'image à chaque nouveau commit
+- Docker image disponible sur DockerHub
+- API qui renvoie la météo en utilisant la commande suivante en utilisant votre image :
+  
+’’’
+docker run --network host --env API_KEY=**** maregistry/efrei-devops-tp2:1.0.0
+’’’
+
+puis dans un autre terminal
+
+’’’
+curl "http://localhost:8081/?lat=5.902785&lon=102.754175"
+’’’
 
 
 
