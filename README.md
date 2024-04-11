@@ -442,6 +442,12 @@ curl "http://localhost:8081/?lat=5.902785&lon=102.754175"
 ```
 
 
+## Bonus
+
+- Add hadolint to Github workflow before build+push and failed on errors
+- Aucune données sensibles stockées dans l'image ou le code source (i.e: openweather API key, Docker hub credentials)
+
+
 
 
 
