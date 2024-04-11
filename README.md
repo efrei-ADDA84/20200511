@@ -447,6 +447,137 @@ curl "http://localhost:8081/?lat=5.902785&lon=102.754175"
 - Add hadolint to Github workflow before build+push and failed on errors
 - Aucune données sensibles stockées dans l'image ou le code source (i.e: openweather API key, Docker hub credentials)
 
+## Introduction
+
+
+## Architecture
+
+To meet the project's requirements, the following architecture has been employed:
+
+### Components
+
+Nous gardons la même architecture que dans le TP1 en ajoutant le fichier de configuration du GitHub Action:
+
+-**`github/workflows`**:
+-**`main.yml`**:
+
+### Diagram
+
+Below is the general structure of our project's architecture:
+
+![Alternative Text](images/General-Shape.png)
+
+## Implementation Steps
+
+
+## Code
+
+### Explication du Code Flask pour l'API Météo
+
+Ce code Flask crée une API simple qui récupère les informations météorologiques pour des coordonnées géographiques spécifiques en utilisant l'API OpenWeather. Il est structuré en plusieurs parties, comme expliqué ci-dessous :
+
+#### Importation des Modules
+
+```python
+from flask import Flask, request, jsonify
+import os
+import requests
+```
+
+-**`Flask`** : utilisé pour créer l'application web.
+-**`request`** : pour accéder aux paramètres de la requête HTTP.
+-**`jsonify`** : pour formater la réponse en JSON.
+-**`os`** : pour accéder aux variables d'environnement.
+-**`requests`** : pour faire des requêtes HTTP à l'API externe d'OpenWeather.
+
+#### Initialisation de l'Application Flask
+
+```python
+app = Flask(__name__)
+```
+
+- Crée une instance de l'application Flask.
+
+#### Définition de la Route et de la Fonction de Traitement
+
+```python
+@app.route('/')
+def get_weather():
+```
+
+- Définit une route racine (/) qui réagit aux requêtes GET.
+
+#### Récupération des Paramètres et de la Clé API
+
+```python
+    latitude = request.args.get('lat')
+    longitude = request.args.get('lon')
+    api_key = os.getenv('OPENWEATHER_API_KEY')
+```
+
+-Récupère la latitude et la longitude à partir des paramètres de la requête HTTP.
+-Récupère la clé API de l'API OpenWeatherMap à partir des variables d'environnement.
+
+#### Vérification de la Présence des Paramètres
+
+```python
+    if not all([latitude, longitude, api_key]):
+        return "Les variables d'environnement LATITUDE, LONGITUDE, et OPENWEATHER_API_KEY sont requises.", 400
+```
+
+- Vérifie si tous les paramètres nécessaires sont présents. Si non, retourne un message d'erreur avec un code HTTP 400 (Bad Request).
+
+#### Construction de la Requête à l'API OpenWeatherMap
+
+```python
+    BASE_URL = "http://api.openweathermap.org/data/2.5/weather"
+    params = {
+        'lat': latitude,
+        'lon': longitude,
+        'appid': api_key,
+        'units': 'metric'
+    }
+    response = requests.get(BASE_URL, params=params)
+```
+
+- Définit l'URL de base pour l'API.
+- Prépare les paramètres pour la requête.
+- Envoie la requête à l'API OpenWeatherMap.
+
+#### Traitement de la Réponse de l'API
+
+```python
+    if response.status_code == 200:
+        data = response.json()
+        weather_description = data['weather'][0]['description']
+        temperature = data['main']['temp']
+        return jsonify({
+            "city": data['name'],
+            "country": data['sys']['country'],
+            "weather_description": weather_description,
+            "temperature": temperature
+        })
+    else:
+        return jsonify({"error": "Failed to fetch weather data"}), response.status_code
+```
+
+- Si la réponse est réussie, extrait et retourne les données météorologiques.
+- En cas d'échec, retourne un message d'erreur et le code de statut HTTP correspondant.
+
+#### Démarrage de l'Application
+
+```python
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=8081)
+```
+
+- Assure que le serveur Flask ne démarre que si le script est exécuté directement.
+- Configure le serveur pour écouter sur toutes les interfaces réseau (utile pour les conteneurs Docker).
+
+
+
+
+
 
 
 
