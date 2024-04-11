@@ -63,13 +63,6 @@ Below is the general structure of our project's architecture:
 
 ![Alternative Text](images/General-Shape.png)
 
-## Implementation Steps
-
-1. **Environment Setup**: Create the `my_env` virtual environment and install necessary libraries.
-2. **Application Development**: Develop the `main.py` script in the `src` directory to interact with the OpenWeather API.
-3. **Dockerization**: Use the `Dockerfile` to containerize the application, ensuring it includes the Python base image, installs dependencies, and specifies the command to run the script.
-4. **Deployment**: Publish the Docker image to DockerHub for community access and reuse.
-
 ## Code
 
 ### Wrapper
@@ -416,20 +409,20 @@ In conclusion, this DevOps TP1 demonstrated an effective application of continuo
 
 # DEVOPS - TP2: Github Action
 
-## Objectifs
+## Objectives
 
-- Configurer un workflow Github Action
-- Transformer un wrapper en API
-- Publier automatiquement à chaque push sur Docker Hub
-- Mettre à disposition son image (format API) sur DockerHub
-- Mettre à disposition son code dans un repository Github
+- Configure a GitHub Actions workflow
+- Transform a wrapper into an API
+- Automatically publish to Docker Hub on each push
+- Make your image (API format) available on DockerHub
+- Make your code available in a GitHub repository
 
-## Notation
+## Grading Criteria
 
-- Code disponible sur Github
-- Github action qui build et push l'image à chaque nouveau commit
-- Docker image disponible sur DockerHub
-- API qui renvoie la météo en utilisant la commande suivante en utilisant votre image :
+- Code available on Github
+- GitHub action that builds and pushes the image on each new commit
+- Docker image available on DockerHub
+- API that returns the weather using the following command using your image:
   
 ```shell
 docker run --network host --env API_KEY=**** maregistry/efrei-devops-tp2:1.0.0
@@ -441,15 +434,16 @@ puis dans un autre terminal
 curl "http://localhost:8081/?lat=5.902785&lon=102.754175"
 ```
 
-
 ## Bonus
 
 - Add hadolint to Github workflow before build+push and failed on errors
 - Aucune données sensibles stockées dans l'image ou le code source (i.e: openweather API key, Docker hub credentials)
 
+# DevOps Application Deployment Project - Automated API Service with Docker and GitHub Actions
+
 ## Introduction
 
-Dans la continuité de l'approfondissement des compétences en DevOps, le Travail Pratique #2 est conçu pour mettre en lumière les fonctionnalités avancées de l'intégration et du déploiement continu (CI/CD) à travers l'utilisation de Github Actions. L'objectif de ce TP est de transformer un wrapper en une API fonctionnelle qui interagit avec le service OpenWeather pour obtenir des informations météorologiques via des coordonnées géographiques fournies. Ce projet implique la configuration d'un workflow Github Action qui automatise le build et le push de l'image Docker à chaque commit. Le code sera hébergé dans un repository GitHub dédié, tandis que l'API sera encapsulée dans une image Docker pour garantir sa portabilité et faciliter son déploiement. L'image finale sera publiée sur DockerHub, rendant notre travail accessible et réutilisable par la communauté. Ce TP souligne l'importance de l'automatisation et des pratiques de développement efficientes dans le paysage technologique actuel, réaffirmant ainsi les principes fondamentaux du DevOps.
+In continuation of deepening DevOps skills, Practical Work #2 is designed to highlight the advanced features of Continuous Integration and Continuous Deployment (CI/CD) through the use of GitHub Actions. The goal of this practical work is to transform a wrapper into a functional API that interacts with the OpenWeather service to obtain weather information via provided geographical coordinates. This project involves setting up a GitHub Action workflow that automates the building and pushing of the Docker image with each commit. The code will be hosted in a dedicated GitHub repository, while the API will be encapsulated in a Docker image to ensure its portability and ease its deployment. The final image will be published on DockerHub, making our work accessible and reusable by the community. This practical work underscores the importance of automation and efficient development practices in today's technological landscape, thereby reaffirming the fundamental principles of DevOps.
 
 ## Architecture
 
@@ -457,31 +451,32 @@ To meet the project's requirements, the following architecture has been employed
 
 ### Components
 
-Nous gardons la même architecture que dans le TP1 en ajoutant le fichier de configuration du GitHub Action:
+We will maintain the same architecture as in Practical Work #1, adding the configuration file for the GitHub Action:
 
--**`github/workflows`**:
--**`main.yml`**:
+- **`main.yml`** in the folder **`.github/workflows`** is used to configure GitHub Actions, automating tasks such as compiling, testing, and deploying our code in response to specific events such as pushes or pull requests.
 
 ### Diagram
 
 Below is the general structure of our project's architecture:
 
-![Alternative Text](images/General-Shape-TP2)
+![Alternative Text](images/General-Shape-TP2.png)
 
 ## Implementation Steps
+
+Same implementation as Practical Work #1 except that we are adding : `.github / workflows`:
 
 
 ## GitHub repository secret
 
-![Alternative Text](images/secret-repository)
+![Alternative Text](images/secret-repository.png)
 
-Ici nous avons 3 secret repository nous permettant de contenir les informations sensible correspondant aux identifiant Dockerhub et secret access key quant'a API openweather.
+Here we have 3 repository secrets allowing us to contain sensitive information corresponding to the DockerHub credentials and the secret access key for the OpenWeather API.
 
 ## Code
 
-### Explication du Code Flask pour l'API Météo (main.py)
+### Explanation of the Flask Code for the Weather API (main.py)
 
-Ce code Flask crée une API simple qui récupère les informations météorologiques pour des coordonnées géographiques spécifiques en utilisant l'API OpenWeather. Il est structuré en plusieurs parties, comme expliqué ci-dessous :
+This Flask code creates a simple API that retrieves weather information for specific geographic coordinates using the OpenWeather API.
 
 #### Importation des Modules
 
@@ -491,30 +486,30 @@ import os
 import requests
 ```
 
--**`Flask`** : utilisé pour créer l'application web.
--**`request`** : pour accéder aux paramètres de la requête HTTP.
--**`jsonify`** : pour formater la réponse en JSON.
--**`os`** : pour accéder aux variables d'environnement.
--**`requests`** : pour faire des requêtes HTTP à l'API externe d'OpenWeather.
+-**`Flask`** : The code is used to create the web application.
+-**`request`** : To access the parameters of the HTTP request.
+-**`jsonify`** : To format the response into JSON.
+-**`os`** : To access environment variables.
+-**`requests`** : To make HTTP requests to the external OpenWeather API.
 
-#### Initialisation de l'Application Flask
+#### Flask Application Initialization
 
 ```python
 app = Flask(__name__)
 ```
 
-- Crée une instance de l'application Flask.
+- Creates an instance of the Flask application.
 
-#### Définition de la Route et de la Fonction de Traitement
+#### Route and Processing Function Definition
 
 ```python
 @app.route('/')
 def get_weather():
 ```
 
-- Définit une route racine (/) qui réagit aux requêtes GET.
+- Defines a root route (/) that responds to GET requests.
 
-#### Récupération des Paramètres et de la Clé API
+#### Retrieving Parameters and API Key
 
 ```python
     latitude = request.args.get('lat')
@@ -522,17 +517,17 @@ def get_weather():
     api_key = os.getenv('OPENWEATHER_API_KEY')
 ```
 
--Récupère la latitude et la longitude à partir des paramètres de la requête HTTP.
--Récupère la clé API de l'API OpenWeatherMap à partir des variables d'environnement.
+- Retrieves latitude and longitude from the parameters of the HTTP request.
+- Retrieves the API key for the OpenWeatherMap API from the environment variables.
 
-#### Vérification de la Présence des Paramètres
+#### Checking for Parameter Presence
 
 ```python
     if not all([latitude, longitude, api_key]):
         return "Les variables d'environnement LATITUDE, LONGITUDE, et OPENWEATHER_API_KEY sont requises.", 400
 ```
 
-- Vérifie si tous les paramètres nécessaires sont présents. Si non, retourne un message d'erreur avec un code HTTP 400 (Bad Request).
+- Checks if all necessary parameters are present. If not, returns an error message with HTTP code 400 (Bad Request).
 
 #### Construction de la Requête à l'API OpenWeatherMap
 
@@ -547,11 +542,11 @@ def get_weather():
     response = requests.get(BASE_URL, params=params)
 ```
 
-- Définit l'URL de base pour l'API.
-- Prépare les paramètres pour la requête.
-- Envoie la requête à l'API OpenWeatherMap.
+- Sets the base URL for the API.
+- Prepares the parameters for the request.
+- Sends the request to the OpenWeatherMap API.
 
-#### Traitement de la Réponse de l'API
+#### Processing the API Response
 
 ```python
     if response.status_code == 200:
@@ -568,90 +563,91 @@ def get_weather():
         return jsonify({"error": "Failed to fetch weather data"}), response.status_code
 ```
 
-- Si la réponse est réussie, extrait et retourne les données météorologiques.
-- En cas d'échec, retourne un message d'erreur et le code de statut HTTP correspondant.
+- If the response is successful, extracts and returns the weather data.
+- In case of failure, returns an error message and the corresponding HTTP status code.
 
-#### Démarrage de l'Application
+#### Starting the Application
 
 ```python
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=8081)
 ```
 
-- Assure que le serveur Flask ne démarre que si le script est exécuté directement.
-- Configure le serveur pour écouter sur toutes les interfaces réseau (utile pour les conteneurs Docker).
+- Ensures that the Flask server starts only if the script is executed directly.
+- Configures the server to listen on all network interfaces (useful for Docker containers).
 
-## Explication du Dockerfile pour l'API Météo
+## Explanation of the Dockerfile for the Weather API
 
-Ce Dockerfile configure un environnement Docker pour déployer une application Flask qui interroge l'API OpenWeather. Il est structuré en plusieurs instructions, comme détaillé ci-dessous :
+Voici la traduction en anglais du texte que vous avez fourni :
 
-### Utilisation d'une Image de Base
+This Dockerfile sets up a Docker environment for deploying a Flask application that queries the OpenWeather API.
+
+### Using a Base Image
 
 ```dockerfile
 FROM python:3.9-alpine
 ```
 
-- Utilise l'image `python:3.9-alpine` comme base. Cette image est basée sur Alpine Linux, qui est réputée pour sa légèreté et sa sécurité, minimisant ainsi les vulnérabilités.
+- Use the `python:3.9-alpine` image as the base. This image is based on Alpine Linux, which is known for its lightweight nature and security, minimizing vulnerabilities.
 
-### Définition du Répertoire de Travail
+### Defining the Working Directory
 
 ```dockerfile 
 WORKDIR /app
 ```
 
-- Définit `/app` comme le répertoire de travail dans le conteneur. Tous les commandes qui suivent seront exécutées dans ce répertoire.
+- Set `/app` as the working directory inside the container. All subsequent commands will be executed in this directory.
 
-### Installation des Dépendances Système
+### Installing System Dependencies
 
 ```dockerfile 
 RUN apk add --no-cache build-base=0.5-r3 libffi-dev=3.4.4-r3
 ```
 
-- Installe les paquets nécessaires pour compiler certains packages Python qui peuvent avoir des composants en C. `build-base` et `libffi-dev` sont installés spécifiquement avec des versions fixes pour maintenir la reproductibilité.
+- Install the necessary packages to compile certain Python packages that may have C components. `build-base` and `libffi-dev` are installed with fixed versions specifically to maintain reproducibility.
 
-### Copie et Installation des Dépendances Python
+### Copying and Installing Python Dependencies
 
 ```dockerfile
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 ```
 
-- Copie le fichier `requirements.txt` du répertoire local au répertoire de travail du conteneur.
+- Copy the `requirements.txt` file from the local directory to the working directory of the container.
 
-- Exécute `pip install` pour installer les packages Python listés dans `requirements.txt` sans mettre en cache les packages téléchargés, réduisant ainsi la taille de l'image.
+- "Execute `pip install` to install the Python packages listed in `requirements.txt` without caching the downloaded packages, thus reducing the size of the image.
 
-### Copie des Fichiers du Code Source
+### Copying Source Code Files
 
 ```dockerfile
 COPY src/ ./
 ```
 
-- Copie les fichiers du code source situés dans le dossier `src` du répertoire local vers le répertoire de travail du conteneur.
+- Copy the source code files located in the `src` folder of the local directory to the working directory of the container.
 
-### Définition des Variables d'Environnement
+### Defining Environment Variables
 
 ```dockerfile
 ENV OPENWEATHER_API_KEY=""
 ENV FLASK_APP=main.py
 ```
 
-- Définit `OPENWEATHER_API_KEY` comme variable d'environnement avec une valeur vide par défaut. La clé API réelle sera passée au moment de l'exécution du conteneur, assurant ainsi que des données sensibles ne soient pas stockées dans l'image.
+- "Set `OPENWEATHER_API_KEY` as an environment variable with an empty default value. The actual API key will be passed at runtime, ensuring that sensitive data is not stored in the image.
+- "Set `FLASK_APP` to indicate to Flask which file to execute."
 
-- Définit `FLASK_APP` pour indiquer à Flask quel fichier exécuter.
-
-### Commande d'Exécution de l'Application
+### Application Execution Command
 
 ```dockerfile
 CMD ["flask", "run", "--host=0.0.0.0", "--port=8081"]
 ```
 
-- Définit la commande par défaut pour exécuter l'application Flask. L'option `--host=0.0.0.0` permet à l'application d'être accessible sur toutes les interfaces réseau du conteneur, et `--port=8081` spécifie le port sur lequel l'application sera accessible.
+- Set the default command to execute the Flask application. The `--host=0.0.0.0` option allows the application to be accessible on all network interfaces of the container, and `--port=8081` specifies the port on which the application will be accessible.
 
-## Explication du Fichier GitHub Actions `main.yml`
+## Explanation of the GitHub Actions File `main.yml`
 
-Ce fichier `main.yml` définit un workflow GitHub Actions nommé "CI to Docker Hub", destiné à automatiser la construction et la publication d'une image Docker sur Docker Hub chaque fois que des modifications sont poussées sur la branche `main`.
+This `main.yml` file defines a GitHub Actions workflow named "CI to Docker Hub," aimed at automating the building and publishing of a Docker image to Docker Hub whenever changes are pushed to the `main` branch.
 
-### Déclencheurs du Workflow
+### Workflow Triggers
 
 ```yaml
 on:
@@ -660,9 +656,9 @@ on:
       - main
 ```
 
-- Ce workflow est déclenché par des événements de `push` sur la branche `main`.
+- This workflow is triggered by `push` events to the `main` branch.
 
-### Jobs du Workflow
+### Workflow Jobs
 
 #### Job build
 
@@ -672,28 +668,28 @@ jobs:
     runs-on: ubuntu-latest
 ```
 
-- Définit un job nommé `build` qui s'exécute sur le dernier runner Ubuntu disponible.
+- Defines a job named `build` that runs on the latest available Ubuntu runner.
 
-### Étapes du Job
+### Job Steps
 
-#### Checkout du Code
+#### Code Checkout
 
 ```yaml
 - uses: actions/checkout@v2
 ```
 
-- Utilise l'action `checkout@v2` pour cloner le code source du dépôt dans l'environnement du runner.
+- Use the `checkout@v2` action to clone the source code of the repository into the runner's environment.
 
-#### Configuration de Docker Buildx
+#### Docker Buildx Configuration
 
 ```yaml 
 - name: Set up Docker Buildx
   uses: docker/setup-buildx-action@v1
 ```
 
-- Utilise `docker/setup-buildx-action@v1` pour configurer Docker Buildx, un outil de Docker permettant de construire des images multi-architectures.
+- Use `docker/setup-buildx-action@v1` to configure Docker Buildx, a Docker tool for building multi-architecture images.
 
-#### Connexion à Docker Hub
+#### Connecting to Docker Hub
 
 ```yaml
 - name: Log in to Docker Hub
@@ -703,9 +699,9 @@ jobs:
     password: ${{ secrets.DOCKER_PASSWORD }}
 ```
 
-- Utilise `docker/login-action@v1` pour se connecter à Docker Hub en utilisant les identifiants stockés comme secrets dans GitHub Actions.
+- Use `docker/login-action@v1` to log in to Docker Hub using credentials stored as secrets in GitHub Actions.
 
-#### Construction et Publication de l'Image Docker
+#### Building and Publishing the Docker Image
 
 ```yaml
 - name: Build and push Docker image
@@ -719,11 +715,11 @@ jobs:
     OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
 ```
 
-- Utilise `docker/build-push-action@v2` pour construire l'image Docker à partir du Dockerfile spécifié et la pousser sur Docker Hub avec le tag `latest`.
+- Use `docker/build-push-action@v2` to build the Docker image from the specified Dockerfile and push it to Docker Hub with the `latest` tag.
 
-- La clé API OpenWeather est passée en tant que variable d'environnement depuis les secrets de GitHub.
+- The OpenWeather API key is passed as an environment variable from GitHub secrets.
 
-#### Linting du Dockerfile avec Hadolint
+#### Linting the Dockerfile with Hadolint
 
 ```yaml
 - name: Run Hadolint
@@ -732,13 +728,13 @@ jobs:
     dockerfile: Dockerfile
 ```
 
-- Utilise `hadolint/hadolint-action@v1.6.0` pour exécuter Hadolint, qui est un linter pour Dockerfiles. Cette étape assure que le Dockerfile suit les meilleures pratiques.
+- Use `hadolint/hadolint-action@v1.6.0` to run Hadolint, which is a linter for Dockerfiles. This step ensures that the Dockerfile follows best practices.
 
-## Explication du Fichier `requirements.txt`
+## Explanation of the `requirements.txt` File
 
-Le fichier `requirements.txt` est utilisé pour gérer les dépendances de ton projet Python. Il contient une liste des bibliothèques externes dont ton application a besoin pour fonctionner correctement. Voici les détails des dépendances spécifiées dans ce fichier :
+The `requirements.txt` file is used to manage dependencies for your Python project. It contains a list of external libraries that your application needs to function properly. 
 
-### Dépendances
+### Dependencies
 
 #### Flask
 
@@ -746,7 +742,7 @@ Le fichier `requirements.txt` est utilisé pour gérer les dépendances de ton p
 Flask
 ```
 
-- **`Flask`** : C'est un framework léger pour le développement d'applications web en Python. Il est conçu pour rendre les applications simples rapidement et facilement, avec la capacité de les étendre à des applications complexes.
+- **`Flask`**: This is a lightweight framework for developing web applications in Python. It's designed to make simple applications quickly and easily, with the ability to scale up to complex applications.
 
 #### requests
 
@@ -754,15 +750,34 @@ Flask
 requests
 ```
 
-- **`requests`** : Une bibliothèque pour envoyer des requêtes HTTP/1.1 en Python. Elle est hautement appréciée pour sa simplicité et sa facilité d'utilisation pour réaliser des tâches telles que l'interrogation d'APIs web.
+- **`requests`**: A library for sending HTTP/1.1 requests in Python. It's highly regarded for its simplicity and ease of use in performing tasks such as querying web APIs.
 
 ## Output
 
-## Execution local
+## Local Execution
+
+##### Input
+
+```shell
+docker run --rm -e OPENWEATHER_API_KEY=b022acb509eacae0875ded1afe41a527 -e LATITUDE=31.2504 -e LONGITUDE=99.2506 monappweather
+```
+
+##### Output
+
+```shell
+La météo à Ganzi, CN est : broken clouds avec une température de -5.65°C.
+```
+
+#### API launch
+
+##### Input
 
 ```shell
 docker run -p 8081:8081 -e OPENWEATHER_API_KEY=$OPENWEATHER_API_KEY mgn94/monappweather:latest
+```
+##### Output
 
+```shell 
  * Serving Flask app 'main.py'
  * Debug mode: off
 WARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.
@@ -771,20 +786,44 @@ WARNING: This is a development server. Do not use it in a production deployment.
  * Running on http://172.17.0.2:8081
 ```
 
-### Autre terminal (externe à l'IDE)
+### Another Terminal (external to the IDE)
+
+##### Input
 
 ```shell
-curl "http://localhost:8081/?lat=40.7128&lon=-74.0060"  
+curl "http://localhost:8081/?lat=40.7128&lon=-74.0060" 
+```
+##### Output
+
+```shell
 {"city":"New York","country":"US","temperature":10.38,"weather_description":"overcast clouds"}
+```
 
+##### Input
+
+```shell
 curl "http://localhost:8081/?lat=-33.8688&lon=151.2093" 
-{"city":"Sydney","country":"AU","temperature":15.39,"weather_description":"overcast clouds"}
+```
 
-curl "http://localhost:8081/?lat=35.6895&lon=139.6917"  
+##### Output
+
+```shell
+{"city":"Sydney","country":"AU","temperature":15.39,"weather_description":"overcast clouds"}
+```
+
+##### Input
+
+```shell
+curl "http://localhost:8081/?lat=35.6895&lon=139.6917" 
+```
+
+##### Output
+
+```shell
 {"city":"Tokyo","country":"JP","temperature":15,"weather_description":"broken clouds"}
 ```
 
-### Création de log:
+### Log Creation:
 
 ```shell
 192.168.65.1 - - [11/Apr/2024 12:56:39] "GET /?lat=40.7128&lon=-74.0060 HTTP/1.1" 200 -
@@ -792,14 +831,17 @@ curl "http://localhost:8081/?lat=35.6895&lon=139.6917"
 192.168.65.1 - - [11/Apr/2024 12:56:52] "GET /?lat=35.6895&lon=139.6917 HTTP/1.1" 200 -
 ```
 
-### Push sur le Github
+### GitHub Action
 
-![Alternative Text](images/build-push)
+![Alternative Text](images/GitHub-Action.png)
+
+### DockerHub
+
+![Alternative Text](images/DockerHub.png)
 
 ## Conclusion
 
-En conclusion, ce Travail Pratique #2 en DevOps a efficacement illustré l'application des principes d'intégration et de déploiement continus (CI/CD) à travers le développement et la mise en service d'une API Dockerisée. En mettant l'accent sur des compétences essentielles en DevOps telles que l'automatisation, la sécurité et l'accessibilité, ce travail a conduit à la mise en œuvre réussie d'une solution logicielle qui interagit avec l'API OpenWeather pour récupérer des données météorologiques via des coordonnées géographiques. Les défis rencontrés, notamment en ce qui concerne l'intégration de contrôles de qualité et la sécurisation des données sensibles à travers les actions GitHub et DockerHub, ont été soigneusement gérés, renforçant l'importance de pratiques de développement et de sécurité rigoureuses dans l'écosystème technologique actuel. Le succès de ce projet est illustré non seulement par la fonctionnalité de l'API mais aussi par sa disponibilité publique sur DockerHub, favorisant ainsi le partage et la réutilisation au sein de la communauté DevOps.
-
+In conclusion, this Practical Work #2 in DevOps effectively demonstrated the application of continuous integration and continuous deployment (CI/CD) principles through the development and deployment of a Dockerized API. By emphasizing essential DevOps skills such as automation, security, and accessibility, this work led to the successful implementation of a software solution that interacts with the OpenWeather API to retrieve weather data via geographical coordinates. Challenges encountered, particularly regarding the integration of quality controls and securing sensitive data through GitHub and DockerHub actions, were carefully managed, reinforcing the importance of rigorous development and security practices in the current technological ecosystem. The success of this project is demonstrated not only by the functionality of the API but also by its public availability on DockerHub, thereby promoting sharing and reuse within the DevOps community.
 
 
 
