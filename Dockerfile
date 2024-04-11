@@ -5,7 +5,7 @@ FROM python:3.9-alpine
 WORKDIR /app
 
 # Installer les dépendances nécessaires pour compiler certains packages Python
-RUN apk add --no-cache build-base libffi-dev
+RUN apk add --no-cache build-base=0.5-r1 libffi-dev=3.3-r2
 
 # Copier le fichier des dépendances et installer les dépendances
 COPY requirements.txt ./
