@@ -472,7 +472,7 @@ Below is the general structure of our project's architecture:
 
 ## Code
 
-### Explication du Code Flask pour l'API Météo
+### Explication du Code Flask pour l'API Météo (main.py)
 
 Ce code Flask crée une API simple qui récupère les informations météorologiques pour des coordonnées géographiques spécifiques en utilisant l'API OpenWeather. Il est structuré en plusieurs parties, comme expliqué ci-dessous :
 
@@ -573,6 +573,7 @@ if __name__ == '__main__':
 
 - Assure que le serveur Flask ne démarre que si le script est exécuté directement.
 - Configure le serveur pour écouter sur toutes les interfaces réseau (utile pour les conteneurs Docker).
+
 
 
 
