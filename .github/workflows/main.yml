@@ -1,4 +1,4 @@
-# Nom de votre workflow
+# Nom du workflow
 name: CI to Docker Hub
 
 # Déclencher le workflow sur les événements de push sur la branche 'main'
@@ -44,5 +44,5 @@ jobs:
       uses: hadolint/hadolint-action@v1.6.0
       with:
         dockerfile: Dockerfile
-        # Exécuter Hadolint, un linter pour Dockerfiles, pour s'assurer que le Dockerfile suit les meilleures pratiques
+        
 

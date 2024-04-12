@@ -5,7 +5,7 @@ import requests
 # Initialiser une nouvelle application Flask
 app = Flask(__name__)
 
-# Définir la route racine qui réagira aux requêtes GET
+# Définir la route racine qui réagira aux requêtes HTTP GET
 @app.route('/')
 def get_weather():
     # Récupérer les paramètres 'lat' (latitude) et 'lon' (longitude) de la requête HTTP
