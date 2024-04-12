@@ -4,7 +4,7 @@ FROM python:3.9-alpine
 # Définir le répertoire de travail dans le conteneur
 WORKDIR /app
 
-# Installer les dépendances nécessaires pour compiler certains packages de Python
+# Installer les dépendances nécessaires pour compiler certains packages Python
 RUN apk add --no-cache build-base=0.5-r3 libffi-dev=3.4.4-r3
 
 # Copier le fichier des dépendances et installer les dépendances

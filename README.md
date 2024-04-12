@@ -1102,7 +1102,7 @@ jobs:
   - **Docker Buildx Setup**: Prepares Docker Buildx to build multi-architecture images.
   - **Docker Login**: Authenticates with Azure Container Registry using secrets configured in the GitHub repository.
   - **Build and Push**: Builds the Docker image from a Dockerfile and pushes it to ACR. The image is tagged with a specific version.
-  - **Hadolint**: Lints the Dockerfile using Hadolint to ensure best practices are followed.
+  - **Hadolint**: Links the Dockerfile using Hadolint to ensure best practices are followed.
 
 ##### 2. Deploy to Azure Container Instance
 

@@ -7,7 +7,7 @@ on: # Déclencheur du workflow
 
 jobs: # Définition des jobs à exécuter
   build-and-push: # Job pour construire et pousser l'image Docker
-    runs-on: ubuntu-latest # Utilise la dernière version d'Ubuntu comme runner
+    runs-on: ubuntu-latest # Dernière version d'Ubuntu comme runner
     steps: 
     - uses: actions/checkout@v2 # Étape pour extraire le code source du repository
 

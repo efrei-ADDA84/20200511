@@ -27,7 +27,7 @@ def get_weather():
         # Si un paramètre est manquant, retourner un message d'erreur et un code de statut HTTP 400 (Bad Request)
         return "Les variables d'environnement LATITUDE, LONGITUDE, et OPENWEATHER_API_KEY sont requises.", 400
 
-    # Définir l'URL de base pour l'API météo OpenWeatherMap
+    # Définir l'URL de base pour l'API OpenWeatherMap
     BASE_URL = "http://api.openweathermap.org/data/2.5/weather"
     # Préparer les paramètres de la requête à envoyer à l'API OpenWeatherMap
     params = {
