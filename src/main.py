@@ -1,9 +1,17 @@
 from flask import Flask, request, jsonify
 import os
 import requests
+from prometheus_flask_exporter import PrometheusMetrics
 
-# Initialiser une nouvelle application Flask
 app = Flask(__name__)
+metrics = PrometheusMetrics(app)
+metrics.info('app_info', 'Weather API', version='1.0.0')
+
+# Compteur pour le nombre de requêtes traitées
+request_counter = metrics.counter(
+    'requests_by_type', 'Number of requests by type',
+    labels={'endpoint': 'get_weather'}
+)
 
 # Définir la route racine qui réagira aux requêtes HTTP GET
 @app.route('/')
