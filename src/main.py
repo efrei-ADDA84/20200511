@@ -60,4 +60,4 @@ def get_weather():
 # Point d'entrée du script, cela permet de lancer le serveur uniquement si le script est exécuté directement
 if __name__ == '__main__':
     # Démarrer l'application Flask sur le port 8081 accessible de l'extérieur
-    app.run(host='0.0.0.0', port=8081)
+    app.run(host='0.0.0.0', port=80)
