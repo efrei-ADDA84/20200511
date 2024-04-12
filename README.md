@@ -615,7 +615,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 - Copy the `requirements.txt` file from the local directory to the working directory of the container.
 
-- "Execute `pip install` to install the Python packages listed in `requirements.txt` without caching the downloaded packages, thus reducing the size of the image.
+- Execute `pip install` to install the Python packages listed in `requirements.txt` without caching the downloaded packages, thus reducing the size of the image.
 
 ### Copying Source Code Files
 
@@ -632,8 +632,8 @@ ENV OPENWEATHER_API_KEY=""
 ENV FLASK_APP=main.py
 ```
 
-- "Set `OPENWEATHER_API_KEY` as an environment variable with an empty default value. The actual API key will be passed at runtime, ensuring that sensitive data is not stored in the image.
-- "Set `FLASK_APP` to indicate to Flask which file to execute."
+- Set `OPENWEATHER_API_KEY` as an environment variable with an empty default value. The actual API key will be passed at runtime, ensuring that sensitive data is not stored in the image.
+- Set `FLASK_APP` to indicate to Flask which file to execute.
 
 ### Application Execution Command
 
