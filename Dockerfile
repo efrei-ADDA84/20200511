@@ -19,4 +19,4 @@ ENV OPENWEATHER_API_KEY=""
 ENV FLASK_APP=main.py
 
 # Commande pour exécuter l'application
-CMD ["flask", "run", "--host=0.0.0.0", "--port=8081"]
+CMD ["flask", "run", "--host=0.0.0.0", "--port=80"]
