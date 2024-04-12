@@ -1,48 +1,62 @@
-# Nom du workflow
-name: CI to Docker Hub
+name: CI to Azure CR
 
-# Déclencher le workflow sur les événements de push sur la branche 'main'
 on:
   push:
     branches:
       - main
 
-# Définir les jobs que le workflow exécutera
 jobs:
-  # Nom du job
-  build:
-    # Indiquer à GitHub Actions de lancer ce job sur un runner Ubuntu le plus récent disponible
+  build-and-push:
     runs-on: ubuntu-latest
-
-    # Définir les étapes du job
     steps:
     - uses: actions/checkout@v2
-      # Utiliser l'action checkout pour cloner le code source du dépôt dans le runner
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v1
-      # Configurer Docker Buildx (un outil de construction Docker qui permet de construire des images multi-architectures)
 
-    - name: Log in to Docker Hub
+    - name: Log in to Azure Container Registry
       uses: docker/login-action@v1
       with:
-        username: ${{ secrets.DOCKER_USERNAME }} # Utiliser le nom d'utilisateur Docker stocké dans les secrets GitHub
-        password: ${{ secrets.DOCKER_PASSWORD }} # Utiliser le mot de passe Docker stocké dans les secrets GitHub
+        registry: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+        username: ${{ secrets.REGISTRY_USERNAME }}
+        password: ${{ secrets.REGISTRY_PASSWORD }}
 
-    - name: Build and push Docker image
+    - name: Build and push Docker image to ACR
       uses: docker/build-push-action@v2
       with:
-        context: . # Indiquer le contexte de build comme le répertoire actuel
-        file: ./Dockerfile # Indiquer le chemin vers le Dockerfile
-        push: true # Pousser l'image vers un registre après la construction
-        tags: mgn94/monappweather:latest # Étiqueter l'image construite
+        context: .
+        file: ./Dockerfile
+        push: true
+        tags: ${{ secrets.REGISTRY_LOGIN_SERVER }}/20200511:v1
       env:
         OPENWEATHER_API_KEY: ${{ secrets.OPENWEATHER_API_KEY }}
-        # Passer la clé API OpenWeather en tant que variable d'environnement
 
     - name: Run Hadolint
       uses: hadolint/hadolint-action@v1.6.0
       with:
         dockerfile: Dockerfile
         
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
 
+    - name: 'Login via Azure CLI'
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: 'Deploy to Azure Container Instance'
+      uses: azure/aci-deploy@v1
+      with:
+        resource-group: ADDA84-CTP
+        dns-name-label: devops-20200511
+        image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/20200511:v1
+        name: 20200511
+        location: 'francecentral'
+        registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+        registry-username: ${{ secrets.REGISTRY_USERNAME }}
+        registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+        secure-environment-variables: OPENWEATHER_API_KEY=${{ secrets.OPENWEATHER_API_KEY }}
