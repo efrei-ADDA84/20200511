@@ -205,7 +205,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY src/ ./
 ```
 
-- Copy the files from the source directory src/ to the working directory /app in the container. This includes your Python script and any other files necessary for running your application.
+- Copy the files from the source directory src/ to the working directory /app in the container. This includes the Python script and any other files necessary for running the application.
 
 #### Environment variable for the API key
 
@@ -213,7 +213,7 @@ COPY src/ ./
 ENV OPENWEATHER_API_KEY=""
 ```
 
-- Set an environment variable **`OPENWEATHER_API_KEY`** that will be used by your application. The actual value of the API key should be provided at runtime, ensuring that your Docker image remains secure.
+- Set an environment variable **`OPENWEATHER_API_KEY`** that will be used by the application. The actual value of the API key should be provided at runtime, ensuring that the Docker image remains secure.
 
 ```dockerfile
 CMD ["python", "./main.py"]
@@ -370,7 +370,7 @@ La météo à Ganzi, CN est : overcast clouds avec une température de -2.91°C.
 
 - Link : https://hub.docker.com
 
-#### Log in to Docker Hub from your terminal
+#### Log in to Docker Hub from the terminal
 
 ##### Input
 
@@ -414,15 +414,15 @@ In conclusion, this DevOps TP1 demonstrated an effective application of continuo
 - Configure a GitHub Actions workflow
 - Transform a wrapper into an API
 - Automatically publish to Docker Hub on each push
-- Make your image (API format) available on DockerHub
-- Make your code available in a GitHub repository
+- Make the image (API format) available on DockerHub
+- Make the code available in a GitHub repository
 
 ## Grading Criteria
 
 - Code available on Github
 - GitHub action that builds and pushes the image on each new commit
 - Docker image available on DockerHub
-- API that returns the weather using the following command using your image:
+- API that returns the weather using the following command using the image:
   
 ```shell
 docker run --network host --env API_KEY=**** maregistry/efrei-devops-tp2:1.0.0
@@ -578,8 +578,6 @@ if __name__ == '__main__':
 
 ## Explanation of the Dockerfile for the Weather API (`Dockerfile`)
 
-Voici la traduction en anglais du texte que vous avez fourni :
-
 This Dockerfile sets up a Docker environment for deploying a Flask application that queries the OpenWeather API.
 
 ### Using a Base Image 
@@ -732,7 +730,7 @@ jobs:
 
 ## Explanation of the (`requirements.txt`) File
 
-The `requirements.txt` file is used to manage dependencies for your Python project. It contains a list of external libraries that your application needs to function properly. 
+The `requirements.txt` file is used to manage dependencies for the Python project. It contains a list of external libraries that the application needs to function properly. 
 
 ### Dependencies
 
@@ -1020,7 +1018,7 @@ if __name__ == '__main__':
 
 ### Dockerfile (`Dockerfile`)
 
-In the `Dockerfile` we simply change the execution port of your application: `8081` to `80`:
+In the `Dockerfile` we simply change the execution port of the application: `8081` to `80`:
 
 ```dockerfile
 # Utiliser une image de base officielle Python Alpine pour minimiser les vulnérabilités
@@ -1047,14 +1045,10 @@ ENV FLASK_APP=main.py
 CMD ["flask", "run", "--host=0.0.0.0", "--port=80"]
 ```
 
-Here's a structured Markdown document in English that explains the provided GitHub Actions workflow:
-
----
-
 ### GitHub Action: CI to Azure CR (`main.yml`)
 
 We modified our main.yml for the new TP3 requirements: 
-This GitHub Action is designed to automate the process of building a Docker image from the code pushed to the main branch, pushing it to Azure Container Registry (ACR), and then deploying it on Azure Container Instance (ACI). Below is a detailed explanation of each part of the workflow.
+This GitHub Action is designed to automate the process of building a Docker image from the code pushed to the main branch, pushing it to Azure Container Registry (ACR), and then deploying it on Azure Container Instance (ACI). 
 
 #### Workflow Trigger
 
