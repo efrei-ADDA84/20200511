@@ -1866,7 +1866,7 @@ To meet the project's requirements, the following architecture has been employed
 
 ## Diagram
 
-![Alternative Text](imagestp4-shape.png)
+![Alternative Text](images/tp4-shape.png)
 
 ## Code
 
@@ -1912,7 +1912,7 @@ provider "azurerm" {
   - Enables additional features of the Azure provider, if any.
   - `skip_provider_registration` is set to `true` to skip the automatic registration of the Azure provider. This is useful in scenarios where the provider registration is handled externally.
 
-  ### vm.tf
+### vm.tf
 
 This Terraform configuration defines an Azure Linux virtual machine with specific settings, including SSH key authentication and injection of a custom Docker installation script. It also generates SSH key pairs and stores them locally for authentication purposes.
 
@@ -2392,7 +2392,7 @@ This command is critical for:
 
 We can go to our Azure resource group and see that the virtual machine has been created by terraform:
 
-![Alternative Text](vm-azur.png)
+![Alternative Text](images/vm-azur.png)
 
 ### SSH Command to Execute Remote Commands with Verbose Output
 
